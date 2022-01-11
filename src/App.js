@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+import Students from './pages/Students';
+import NewStudent from './pages/NewStudent';
+import Editstudent from './pages/Editstudent';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App asdasd'>
+      <Header />
+
+      <div className='main flex-shrink-0'>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={ <Students /> } />
+            <Route path="/add-student" element={ <NewStudent />} />
+            <Route path="/edit-student/:id" element={ <Editstudent />} />
+          </Routes>
+        </Router>
+      </div>
+
+      <Footer />
     </div>
   );
 }
