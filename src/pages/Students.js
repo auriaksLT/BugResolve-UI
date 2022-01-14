@@ -62,8 +62,8 @@ export default function Students()
                 <div className='col-md-12'>
                     <div className='card'>
                         <div className='card-header'>
-                            <h4> Students Data 
-                                <Link to={'add-student'} className="btn btn-primary btn-sm float-end"> Add Student </Link>
+                            <h4> Users 
+                                <Link to={'add-student'} className="btn btn-primary btn-sm float-end"> Add User </Link>
                             </h4>
                         </div>
                         <div className='card-body'>
@@ -73,7 +73,7 @@ export default function Students()
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Course</th>
+                                        <th>Type</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Actions</th>

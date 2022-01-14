@@ -36,7 +36,7 @@ export default function NewStudent()
                 <div className='col-md-6'>
                     <div className='card'>
                         <div className='card-header'>
-                            <h4> Add Student
+                            <h4> Add User
                                 <Link to={'/'} className="btn btn-primary btn-sm float-end"> BACK </Link>
                             </h4>
                         </div>
@@ -47,7 +47,7 @@ export default function NewStudent()
                                     <input type='text' name='name' onChange={changeHandler} value={allValues.name} className='form-control' />
                                 </div>
                                 <div className='form-group mb3'>
-                                    <label>Course</label>
+                                    <label>Type</label>
                                     <input type='text' name='course' onChange={changeHandler} value={allValues.course} className='form-control' />
                                 </div>
                                 <div className='form-group mb3'>

@@ -54,7 +54,7 @@ export default function NewStudent()
                 <div className='col-md-6'>
                     <div className='card'>
                         <div className='card-header'>
-                            <h4> Edit Student
+                            <h4> Edit User
                                 <Link to={'/'} className="btn btn-primary btn-sm float-end"> BACK </Link>
                             </h4>
                         </div>
