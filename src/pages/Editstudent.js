@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
-export default function NewStudent()
+export default function EditStudent()
 {
+    let navigate = useNavigate();
     const { id } = useParams();
+    const [error, setError] = useState('');
     const [message, setMessage] = useState(null);
     const [allValues, setAllValues] = useState({
         name: '',
@@ -20,10 +22,12 @@ export default function NewStudent()
     const fetchStudent = async () => {
         const res = await axios.get(`http://localhost:8000/api/edit-student/`+id);
         //console.log(res);
-        if(res.status === 200 && res.data.student != null){
+        if(res.data.status === 200 && res.data.student != null){
             setAllValues(res.data.student);
         } else {
-            setMessage('Student data could not be found, please try again');
+            setMessage('User data could not be found, please try again');
+            // need some message transfer (maybe use SweetAlert v2?) to redirection location
+            //navigate('/')
         }   
     };
 
@@ -38,12 +42,25 @@ export default function NewStudent()
             update_btn.innerText = "Updating";
             await axios.put(`http://localhost:8000/api/update-student/`+id, allValues)
             .then((response) => {
+                console.log(response);
                 if(response.status === 200){
-                    console.log(response);
-                    
-                    update_btn.innerText = "Save Changes";
-                    update_btn.disabled = false;
-                    setMessage(response.data.message);
+                    if(response.data.status === 200){
+                        update_btn.innerText = "Save Changes";
+                        update_btn.disabled = false;
+                        setMessage(response.data.message);
+                    }
+                    else if(response.data.status === 400)
+                    {
+                        update_btn.innerText = "Save Changes";
+                        update_btn.disabled = false;
+                        setError(response.data.validate_err);
+                    } 
+                    else
+                    {
+                        update_btn.innerText = "Save Changes";
+                        setMessage('User does not exist, please select existing user');
+                        //navigate('/')
+                    }
                 }
             });
     }
@@ -60,23 +77,27 @@ export default function NewStudent()
                         </div>
                         <div className='card-body'>
                             <form onSubmit={onEditStudent}>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Name</label>
                                     <input type='text' name='name' onChange={changeHandler} value={allValues.name} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.name}</span>
                                 </div>
-                                <div className='form-group mb3'>
-                                    <label>Course</label>
+                                <div className='form-group mb-3'>
+                                    <label>Type</label>
                                     <input type='text' name='course' onChange={changeHandler} value={allValues.course} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.course}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Email</label>
                                     <input type='email' name='email' onChange={changeHandler} value={allValues.email} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.email}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Phone</label>
                                     <input type='text' name='phone' onChange={changeHandler} value={allValues.phone} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.phone}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <button type='submit' className='btn btn-primary my-2 float-end' id='update_btn'>Save Changes</button>
                                 </div>
                             </form>

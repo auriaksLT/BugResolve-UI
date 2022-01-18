@@ -12,7 +12,7 @@ export default function Students()
 
     useEffect(()=>{
         fetchStudents();
-    }, [message]); 
+    }, []); 
     
     const fetchStudents = async () => {
         await axios(`http://localhost:8000/api/students`) 
@@ -26,9 +26,13 @@ export default function Students()
     }
 
     const deleteStudent = async (e, id) => {
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Deleting";
+
         await axios.delete(`http://localhost:8000/api/detele-student/`+id)
         .then((response) => {
             if(response.status === 200){
+                thisClicked.closest("tr").remove();
                 setMessage(response.data.message);
             }
         });

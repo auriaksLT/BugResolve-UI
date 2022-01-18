@@ -6,6 +6,7 @@ export default function NewStudent()
 {
     let navigate = useNavigate();
     const [status, setStatus] = useState('');
+    const [error, setError] = useState('');
     const [allValues, setAllValues] = useState({
         name: '',
         course: '',
@@ -24,8 +25,13 @@ export default function NewStudent()
                 allValues,
             )
             .then((response) => {
-                if(response.status === 200){
+                //console.log(response);
+                if(response.data.status === 200){
                     navigate('/')
+                }
+                else
+                {
+                    setError(response.data.validate_err);
                 }
             });
     }
@@ -42,23 +48,27 @@ export default function NewStudent()
                         </div>
                         <div className='card-body'>
                             <form onSubmit={onCreateStudent}>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Name</label>
                                     <input type='text' name='name' onChange={changeHandler} value={allValues.name} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.name}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Type</label>
                                     <input type='text' name='course' onChange={changeHandler} value={allValues.course} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.course}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Email</label>
                                     <input type='email' name='email' onChange={changeHandler} value={allValues.email} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.email}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <label>Phone</label>
                                     <input type='text' name='phone' onChange={changeHandler} value={allValues.phone} className='form-control' />
+                                    <span className='text-danger mb-2'>{error.phone}</span>
                                 </div>
-                                <div className='form-group mb3'>
+                                <div className='form-group mb-3'>
                                     <button type='submit' className='btn btn-primary my-2 float-end'>Add</button>
                                 </div>
                             </form>
